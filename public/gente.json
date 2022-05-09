@@ -1,0 +1,8 @@
+[
+    {"id":"0","nombre":"cocky","edad":"1","foto1":["img/caniche1.jpg","img/caniche2.jpg"],"acerca":"Le gusta dormir mucho","ubicacion":"General Cabrera","telefono":"+22345662"},
+    {"id":"1","nombre":"lula","edad":"3","foto1":["img/callejero1.jpg","img/callejero2.jpg"],"acerca":"Muy tranquila y le gusta jugar","ubicacion":"General Cabrera","telefono":"+22345662"},
+    {"id":"2","nombre":"toby","edad":"5","foto1":["img/calljero3.jpg","img/callejero4.jpg","img/calljero3.jpg"],"acerca":"Come todo el dia","ubicacion":"Carnerillo","telefono":"+22345662"},
+    {"id":"3","nombre":"anto","edad":"4","foto1":["img/galgo1.jpg","img/galgo2.jpg"],"acerca":"muy bella y con todas las vacunas","ubicacion":"Carnerillo","telefono":"+22345662"},
+    {"id":"4","nombre":"camilo","edad":"8","foto1":["img/camilo.jpg"],"acerca":"Es muy tierno y no molesta nunca","ubicacion":"General Deheza","telefono":"+22345662"},
+    {"id":"5","nombre":"Sin Nombre","edad":"2","foto1":["img/sinNombre.jpg"],"acerca":"Es un poco arisco","ubicacion":"General Deheza","telefono":"+22345662"}
+]

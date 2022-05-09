@@ -1,0 +1,28 @@
+#principal{
+    text-align: center;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:1% 0 5% 0;
+}
+#tarjeta{
+    width: 15rem;
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.38);
+    border-radius: 24px;
+}
+.botones{
+    border-radius: 24px;
+}
+.botonIzquierda{
+    margin-right: 2%;
+}
+.botonDerecha{
+    margin-left: 2%;
+}
+
+@media (min-width: 800px){
+    #tarjeta{
+        width: 22rem;
+    }
+}
