@@ -4,6 +4,8 @@ import NavBar from '../NavBar/NavBar'
 import ContextProvider from '../context/Context'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import CartList from '../Cart/CartList'
+import Inicio from '../inicio/Inicio'
+import PublicarAdopcion from '../PublicarAdopcion/PublicarAdopcion'
 
 
 function RouteApp() {
@@ -15,10 +17,14 @@ function RouteApp() {
               <Routes>
 
                 <Route path='/'element={
-                <ContactList/>}/>
+                <Inicio/>}/>
 
                 <Route path='/cart' element={
                   <CartList/>
+                }/>
+
+                <Route path='/PublicarAdopcion' element={
+                  <PublicarAdopcion/>
                 }/>
 
               </Routes>

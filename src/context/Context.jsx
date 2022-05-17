@@ -10,6 +10,7 @@ function ContextProvider ({children}){
     const [indice,setIndice] = useState(0)
     const [cargando2,SetCargando2] = useState(false)
     const [cachorros,SetCachorros] = useState([])
+    const [inicioActivado,SetInicioActivado]=useState(false)
     
     const addToCart=(gente)=>{
         SetCachorros([
@@ -24,6 +25,10 @@ function ContextProvider ({children}){
     const funcionCargando=(cargando)=>{
         SetCargando2(cargando)
     }
+
+    const cargaInicio=(activar)=>{
+        SetInicioActivado(activar)
+    }
     return(
         <Context.Provider value={{
             indice,
@@ -31,6 +36,8 @@ function ContextProvider ({children}){
             cargando2,
             funcionCargando,
             addToCart,
+            cargaInicio,
+            inicioActivado,
             cachorros
             
         }}>

@@ -1,0 +1,31 @@
+#fondo{
+    background-image: url('../../public/img/fondo.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#Contenedor{
+    width: 60%;
+    margin: auto;
+}
+#Contenedor img{
+    width: 100%;
+}
+#ContenedorTexto{
+    text-align: center;
+}
+h1{
+    font-family: cursive;
+}
+
+@media (min-width:1000px){
+    #fondo{
+       height: 100vh;
+    }
+    #Contenedor{
+        width: 30%;
+        margin: auto;
+    }
+    #Contenedor img{
+        width: 100%;
+    }
+}

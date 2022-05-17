@@ -9,7 +9,7 @@ function Contact({gente}) {
     const {siguiente,indice,addToCart} = useContext(Context)
     const [numero,setNumero] = useState(indice)
     //const [cargando,SetCargando] = useState(false)
-    
+    console.log(gente)
       function next(e){
         e.preventDefault()
         addToCart(gente)
@@ -34,11 +34,11 @@ function Contact({gente}) {
       
     }
     function quiere(){
-      document.getElementById('colores').style.background='#96F7D2'
+      document.getElementById('colores').style.background='#d1e7dd'
       
     }
     function noQuiere(){
-      document.getElementById('colores').style.background='#FCB1B1'
+      document.getElementById('colores').style.background='#f8d7da'
     }
     function volver(){
       document.getElementById('colores').style.background='white'
@@ -47,7 +47,7 @@ function Contact({gente}) {
 
   return (
       <div id='principal'>
-          <Card id='tarjeta'>
+          <Card id='tarjeta' >
           <Carousel interval={null}>
               {
                   

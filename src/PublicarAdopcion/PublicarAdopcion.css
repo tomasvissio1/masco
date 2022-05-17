@@ -1,0 +1,7 @@
+input:placeholder-shown {
+    font-style: italic;
+    opacity: 50%;
+ }
+/*  input[type="file"] {
+    display: none;
+} */

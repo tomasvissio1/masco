@@ -1,3 +1,4 @@
+import { collection, Firestore, getDocs, getFirestore } from 'firebase/firestore'
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Card,Modal } from 'react-bootstrap'
 import { alignPropType } from 'react-bootstrap/esm/types'
@@ -12,30 +13,44 @@ function CartList() {
   const [mascotas,SetMascotas] = useState([])
   const [hayMascotas,SetHayMascotas] = useState(false)
   const [traerIndice,SetIndice] = useState('')
-  let botones = document.getElementsByClassName('boton')
   
-  for (let i = 0; i < botones.length; i++) {
-    botones[i].addEventListener('click',function(){
-      SetIndice(this.id)
-      AbrirModal()
-    })
-  }
+  
+  
+  
+  
   useEffect(()=>{
     if (cachorros.length === 0) {
     }else{
       
       SetHayMascotas(true)
-        
-      
-      
     }
   },[])
 
    useEffect(()=>{
-        fetch('gente.json')
+        /* fetch('gente.json')
         .then(response => response.json())
         .then(resp=>{SetMascotas(resp)
-        })
+        }) */
+
+        /* const querydb = getFirestore()
+            const queryCollection = collection(querydb,'mascotas')
+            getDocs(queryCollection)
+          .then(resp=>{
+            console.log(resp)
+            SetMascotas(resp.docs.data())
+          
+        }) */
+        setTimeout(()=>{
+          let botones = document.getElementsByClassName('boton')
+          for (let i = 0; i < botones.length; i++) {
+            botones[i].addEventListener('click',function(){
+              SetIndice(this.id)
+              AbrirModal()
+            })
+          }
+        },1000)
+        
+        
     
 },[]) 
 
@@ -46,7 +61,7 @@ function CartList() {
   function CerrarModal(){
     SetModal(false)
   }
-
+  
     
 
 
@@ -55,20 +70,20 @@ function CartList() {
       <div>
     {
       hayMascotas ? 
-      (cachorros.map((produ)=> <div key={produ.id}>
+      (cachorros.map((produ,index)=> <div key={index}>
       <Card>
-        <Card.Header as="h2" style={{'textAlign':'center'}}>Hola! soy {produ.nombre}</Card.Header>
+        <Card.Header as="h2" style={{'textAlign':'center',"color":'white','textShadow':'3px 2px 6px rgba(0,0,0,0.58)'}} className='alert alert-success'>Hola! soy {produ.nombre}</Card.Header>
         <Card.Body>
           <div style={{'display':'flex','justifyContent':'space-evenly','alignItems':'center'}}>
             <div>
-                <img src={produ.foto1[0]} style={{'width':'60%','margin':'auto','borderRadius':'50%'}} alt="" />
+                <img src={produ.foto1[0]} style={{'width':'60%','margin':'auto','borderRadius':'50%'}}  className="d-block w-1" alt="" />
             </div>
             <div style={{'textAlign':'center'}}>
                 <Card.Title>Gracias por interesarte en mi!</Card.Title>
                 <Card.Text>
-                  {produ.acerca}
+                  {produ.detalle}
                 </Card.Text>
-                  <Button variant="outline-secondary" className='boton' id={produ.id} >Comunicate conmigo!</Button>
+                  <Button variant="outline-secondary" className='boton' id={index} >Comunicate conmigo!</Button>
             </div>
           </div>
         </Card.Body>
@@ -86,12 +101,12 @@ function CartList() {
               <div style={{'position':'fixed','top':'0','left':'0','right':'0','bottom':'0','zIndex':'1','background':'rgba(0,0,0,0.5)'}}>
                 <Modal.Dialog style={{'position':'fixed','top':'0','left':'0','right':'0','bottom':'0','zIndex':'2',"textAlign":'center'}}>
                 <Modal.Header closeButton onClick={CerrarModal}>
-                  <Modal.Title >{mascotas[traerIndice].nombre}</Modal.Title>
+                  <Modal.Title >{cachorros[traerIndice].nombre}</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                  <h2>{mascotas[traerIndice].ubicacion}</h2>
-                  <p>Teléfono: {mascotas[traerIndice].telefono}</p>
+                  <h2>{cachorros[traerIndice].localidad}</h2>
+                  <p>Teléfono: {cachorros[traerIndice].telefono}</p>
                   <Button variant="secondary" onClick={CerrarModal}>Abrir Whatsapp</Button>
                 </Modal.Body>
               </Modal.Dialog>

@@ -1,5 +1,15 @@
+
 #fondo{
     background: url("../../public/img/fondo.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    height: 90vh;
+}
+
+@media (min-width:800px){
+    #fondo{
+        background: url("../../public/img/fondo.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 }

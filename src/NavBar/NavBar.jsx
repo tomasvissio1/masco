@@ -9,11 +9,14 @@ function NavBar() {
   return (
     <Navbar bg="dark" variant="dark" id='bar'>
         <Container>
-        <Link to={'/'}>
-            <Navbar.Brand href="#home">loving</Navbar.Brand>
+        <Link to={'/'} style={{'textDecoration':'none'}}>
+            <Navbar.Brand href="#home">En adopción</Navbar.Brand>
         </Link>
         <Nav className="me-auto">
-              <Nav.Link href="#home">Matches</Nav.Link>
+          <Link to={'/PublicarAdopcion'} style={{'textDecoration':'none'}}>
+            <Nav.Link href="#home">Publicar Adopción</Nav.Link>
+          </Link>
+              
               <Nav.Link href="#features">Friendly</Nav.Link>
         </Nav>
         </Container>
