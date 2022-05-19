@@ -16,8 +16,6 @@ function NavBar() {
           <Link to={'/PublicarAdopcion'} style={{'textDecoration':'none'}}>
             <Nav.Link href="#home">Publicar Adopción</Nav.Link>
           </Link>
-              
-              <Nav.Link href="#features">Friendly</Nav.Link>
         </Nav>
         </Container>
         <div style={{"marginRight":"2%"}}>
