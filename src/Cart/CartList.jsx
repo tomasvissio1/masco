@@ -76,7 +76,7 @@ function CartList() {
         <Card.Body>
           <div style={{'display':'flex','justifyContent':'space-evenly','alignItems':'center'}}>
             <div>
-                <img src={produ.foto1[0]} style={{'width':'60%','margin':'auto','borderRadius':'50%'}}  className="d-block w-1" alt="" />
+                <img src={produ.foto1[0]} style={{'margin':'auto','borderRadius':'50%','width': '18rem'}}  className="d-block w-1" alt="" />
             </div>
             <div style={{'textAlign':'center'}}>
                 <Card.Title>Gracias por interesarte en mi!</Card.Title>
@@ -107,7 +107,7 @@ function CartList() {
                 <Modal.Body>
                   <h2>{cachorros[traerIndice].localidad}</h2>
                   <p>Teléfono: {cachorros[traerIndice].telefono}</p>
-                  <Button variant="secondary" onClick={CerrarModal}>Abrir Whatsapp</Button>
+                  <Button variant="secondary" className='alert-success' style={{'color':'white','textShadow':'1px 1px 1px rgba(0,0,0,0.8)'}} onClick={CerrarModal}>Abrir Whatsapp</Button>
                 </Modal.Body>
               </Modal.Dialog>
               </div>

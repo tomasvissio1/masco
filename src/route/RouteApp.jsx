@@ -6,6 +6,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import CartList from '../Cart/CartList'
 import Inicio from '../inicio/Inicio'
 import PublicarAdopcion from '../PublicarAdopcion/PublicarAdopcion'
+import MisPublicaciones from '../MisPublicaciones/MisPublicaciones'
+import IniciarSesion from '../IniciarSesion/IniciarSesion'
+import NuevoUsuario from '../NuevoUsuario/NuevoUsuario'
+import CrearCuenta from '../CrearCuenta/CrearCuenta'
+import PrePublicacion from '../PublicarAdopcion/PrePublicacion'
 
 
 function RouteApp() {
@@ -24,7 +29,23 @@ function RouteApp() {
                 }/>
 
                 <Route path='/PublicarAdopcion' element={
-                  <PublicarAdopcion/>
+                  <PrePublicacion/>
+                }/>
+
+                <Route path='/MisPublicaciones' element={
+                  <MisPublicaciones/>
+                }/>
+
+                <Route path='/IniciarSesion' element={
+                  <IniciarSesion/>
+                }/>
+
+                <Route path='/NuevoUsuario' element={
+                  <NuevoUsuario/>
+                }/>
+
+                <Route path='/CrearCuenta' element={
+                  <CrearCuenta/>
                 }/>
 
               </Routes>

@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {Button, Card, Modal} from 'react-bootstrap'
 import {storage} from '../FireBase/Config'
 import {getDownloadURL, listAll, ref,uploadBytes} from 'firebase/storage'
 import {v4} from 'uuid'
 import { addDoc, collection, getFirestore } from 'firebase/firestore'
 import '../PublicarAdopcion/PublicarAdopcion.css'
+import { Context } from '../context/Context'
 
 function PublicarAdopcion() {
     const [realizado,SetRealizado]=useState(false)
     const [subirImagen, SetSubirImagen] =useState(null)
     const [listaDeImagenes,setListaDeImagenes] = useState([])
     const [confirmarDatos,SetConfirmarDatos] = useState(false)
+    const [nombreImagen,SetNombreImagen]= useState('')
+    const {usuario} = useContext(Context)
     completarDatos()
         function completarDatos(){
             setTimeout(() => {
@@ -23,7 +26,7 @@ function PublicarAdopcion() {
             }
             if(document.getElementById('localidad').value==''){
                 valor++
-                
+
             }
             if(document.getElementById('telefono').value==''){
                 valor++
@@ -37,8 +40,6 @@ function PublicarAdopcion() {
                 document.getElementById('cmdSubir').disabled=true
             }
             }, 500);
-
-            
         }
     //traigo datos de todo lo que se escribio y tambien de las fotos
     function traerDatos(){
@@ -54,7 +55,7 @@ function PublicarAdopcion() {
         let localidadf = document.getElementById('localidad').value
         let telefonof = document.getElementById('telefono').value
         let detallesf = document.getElementById('detalles').value
-        let objeto={nombre:nombref,edad:edadf,localidad:localidadf,telefono:telefonof,detalle:detallesf,foto1:listaDeImagenes,categoria:categoriaf}
+        let objeto={nombreImagen:nombreImagen,usuario:usuario,nombre:nombref,edad:edadf,localidad:localidadf,telefono:telefonof,detalle:detallesf,foto1:listaDeImagenes,categoria:categoriaf}
 
         const db = getFirestore()
         const queryCollection = collection(db,'mascotas')
@@ -83,18 +84,19 @@ function PublicarAdopcion() {
         if (subirImagen==null) return;
         console.log(subirImagen.name)
        /*  const imageRef = ref(storage, `images/${subirImagen.name + v4()}`) */
-       const imageRef = ref(storage, `${document.getElementById('nombre').value}/${subirImagen.name + v4()}`)
+       const imageRef = ref(storage, `${usuario}/${document.getElementById('nombre').value}/${subirImagen.name/*  + v4() */}`)
+       SetNombreImagen(subirImagen.name)
         console.log(imageRef)
         uploadBytes(imageRef, subirImagen)
         .then(()=>{
-            alert("imagn cargada")
+            alert("imagen cargada")
             traerFotos()
         })
     }
 
     //traigo la url de las fotos y la coloco en el objeto donde guardo todos los datos
     function traerFotos(){
-        const imageListRef=ref(storage,`${document.getElementById('nombre').value}/`)
+        const imageListRef=ref(storage,`${usuario}/${document.getElementById('nombre').value}/`)
         listAll(imageListRef).then((response)=>{
             response.items.forEach((item)=>{
                 getDownloadURL(item).then((url)=>{

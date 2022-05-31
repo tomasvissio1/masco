@@ -8,8 +8,6 @@ import {faHeart,faMarker,faXmark} from '@fortawesome/free-solid-svg-icons'
 function Contact({gente}) {
     const {siguiente,indice,addToCart} = useContext(Context)
     const [numero,setNumero] = useState(indice)
-    //const [cargando,SetCargando] = useState(false)
-    console.log(gente)
       function next(e){
         e.preventDefault()
         addToCart(gente)
