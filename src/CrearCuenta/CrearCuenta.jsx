@@ -1,10 +1,15 @@
-import { collection, getDocs, getFirestore } from 'firebase/firestore'
-import React, { useEffect, useState } from 'react'
+import { addDoc, collection, getDocs, getFirestore } from 'firebase/firestore'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
+import { Context } from '../context/Context'
+import NuevoUsuario from '../NuevoUsuario/NuevoUsuario'
+import PrePublicacion from '../PublicarAdopcion/PrePublicacion'
 
 function CrearCuenta() {
+    const {cargarUsuario} = useContext(Context)
     const [usuarios,SetUsuarios]=useState([])
     const [distinto,SetDistinto]=useState()
+    const [creado,SetCreado] = useState(false)
 
     useEffect(()=>{
         const quedydb = getFirestore()
@@ -21,11 +26,9 @@ function CrearCuenta() {
             if(usuarios[i].usuario!=document.getElementById('txtUsuario').value){
                 SetDistinto(false)
             }else{
-                alert('no ando')
+                alert('ya existe ese usuario')
                 SetDistinto(true)
-                document.getElementById('txtUsuario').value=''
-                document.getElementById('txtContra1').value=''
-                document.getElementById('txtContra2').value=''
+                window.location.replace('');
             }
         }
         if (distinto==false) {
@@ -35,7 +38,18 @@ function CrearCuenta() {
     function comparativa(){
             if (distinto==false) {
                 if (document.getElementById('txtContra1').value == document.getElementById('txtContra2').value) {
-                    alert('anda joya')
+                    alert('entra')
+                    let objeto={usuario:document.getElementById('txtUsuario').value,contra:document.getElementById('txtContra1').value}
+                    const querydb = getFirestore()
+                    const queryCollection = collection(querydb,'usuarios')
+                    addDoc(queryCollection,objeto)
+                    .then(resp=>{
+                        alert('listo')
+                        cargarUsuario(objeto.usuario)
+                        localStorage.setItem('usuario',objeto.usuario)
+                        SetCreado(true)
+                    })
+                    
                 }
                 else{
                     alert('las contras no son iguales')
@@ -46,7 +60,13 @@ function CrearCuenta() {
     }
   return (
     <div>
-        <Form style={{'width':'50%','margin':'auto','border':'1px groove','textAlign':'center'}}>
+        {
+            creado ? 
+            (<div>
+                <NuevoUsuario/>
+            </div>)
+            :
+            (<Form style={{'width':'50%','margin':'auto','border':'1px groove','textAlign':'center'}}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Ingresa un usuario</Form.Label>
                 <br />
@@ -78,7 +98,8 @@ function CrearCuenta() {
             <Button variant="primary" type="submit" onClick={buscar}>
                 Confirmar
             </Button>
-        </Form>
+        </Form>)
+        }
     </div>
   )
 }

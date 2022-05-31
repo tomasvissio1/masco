@@ -7,6 +7,7 @@ function NuevoUsuario() {
     const [activado,SetActivado] = useState(false)
 
     function salir(){
+        localStorage.clear()
         SetActivado(true)
         cargarUsuario('')
     }

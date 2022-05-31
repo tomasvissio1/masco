@@ -27,6 +27,7 @@ function IniciarSesion() {
                 if(traerUsuarios[i].contra==document.getElementById('txtContra').value){
                     alert('entro')
                     cargarUsuario(document.getElementById('txtUsuario').value)
+                    localStorage.setItem('usuario',document.getElementById('txtUsuario').value)
                     SetVolver(true)
                 }else{
                     alert('contrasenia mal')

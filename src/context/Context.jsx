@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const Context = createContext([])
 
@@ -19,6 +19,14 @@ function ContextProvider ({children}){
             gente
         ])
     }
+    useEffect(()=>{
+        if (localStorage.getItem('usuario')==null) {
+            alert('no hay usuario')
+        }else{
+            alert('si hay usuario')
+            setUsuario(localStorage.getItem('usuario'))
+        }
+    },[])
 
     const siguiente =(numero)=>{
         setIndice(numero)
