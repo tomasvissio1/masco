@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { Context } from '../context/Context'
 import NuevoUsuario from '../NuevoUsuario/NuevoUsuario'
-import PrePublicacion from '../PublicarAdopcion/PrePublicacion'
 
 function CrearCuenta() {
     const {cargarUsuario} = useContext(Context)
@@ -26,7 +25,7 @@ function CrearCuenta() {
             if(usuarios[i].usuario!=document.getElementById('txtUsuario').value){
                 SetDistinto(false)
             }else{
-                alert('ya existe ese usuario')
+                alert('Ya existe ese usuario')
                 SetDistinto(true)
                 window.location.replace('');
             }
@@ -38,13 +37,11 @@ function CrearCuenta() {
     function comparativa(){
             if (distinto==false) {
                 if (document.getElementById('txtContra1').value == document.getElementById('txtContra2').value) {
-                    alert('entra')
                     let objeto={usuario:document.getElementById('txtUsuario').value,contra:document.getElementById('txtContra1').value}
                     const querydb = getFirestore()
                     const queryCollection = collection(querydb,'usuarios')
                     addDoc(queryCollection,objeto)
                     .then(resp=>{
-                        alert('listo')
                         cargarUsuario(objeto.usuario)
                         localStorage.setItem('usuario',objeto.usuario)
                         SetCreado(true)
@@ -52,7 +49,7 @@ function CrearCuenta() {
                     
                 }
                 else{
-                    alert('las contras no son iguales')
+                    alert('Las contraseñas no son iguales')
                     document.getElementById('txtContra1').value=''
                     document.getElementById('txtContra2').value=''
                 }

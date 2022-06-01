@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { Context, UserContext } from '../context/Context'
 
 function NuevoUsuario() {
@@ -14,13 +15,23 @@ function NuevoUsuario() {
   return (
     <div>
         {
-            activado ? (
-            <>volver al menu</>
+            activado ? 
+            (
+                <div style={{'textAlign':'center'}}>
+                    <h2>Saliste de la sesión</h2>
+                    <Link to={'/'}>
+                        <Button variant="primary" type="">
+                            Menú Principal
+                        </Button>
+                    </Link>
+                    
+                </div>
             )
             :
             (
-                <div>
-                    <h4>Desea salir de la sesion</h4>
+                <div style={{'textAlign':'center'}}>
+                    <h2>Buenos dias {usuario}</h2>
+                    <h4>¿Desea salir de la sesión?</h4>
                     <Button variant="primary" type="" onClick={salir}>
                             cerrar sesion
                     </Button>

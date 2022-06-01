@@ -27,19 +27,6 @@ function CartList() {
   },[])
 
    useEffect(()=>{
-        /* fetch('gente.json')
-        .then(response => response.json())
-        .then(resp=>{SetMascotas(resp)
-        }) */
-
-        /* const querydb = getFirestore()
-            const queryCollection = collection(querydb,'mascotas')
-            getDocs(queryCollection)
-          .then(resp=>{
-            console.log(resp)
-            SetMascotas(resp.docs.data())
-          
-        }) */
         setTimeout(()=>{
           let botones = document.getElementsByClassName('boton')
           for (let i = 0; i < botones.length; i++) {
@@ -90,7 +77,7 @@ function CartList() {
       </Card>
     </div>))
       :
-      (<>No has elegido ninguna mascota</>)
+      (<div style={{'textAlign':'center'}}>No has elegido ninguna mascota</div>)
     }
     </div>
 

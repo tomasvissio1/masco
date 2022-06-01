@@ -22,25 +22,29 @@ function IniciarSesion() {
     
     function comparar(e){
         e.preventDefault()
+        let boleana=false
         for (let i = 0; i < traerUsuarios.length; i++) {
             if(traerUsuarios[i].usuario==document.getElementById('txtUsuario').value){
+                boleana=true
                 if(traerUsuarios[i].contra==document.getElementById('txtContra').value){
-                    alert('entro')
                     cargarUsuario(document.getElementById('txtUsuario').value)
                     localStorage.setItem('usuario',document.getElementById('txtUsuario').value)
                     SetVolver(true)
+                    
                 }else{
-                    alert('contrasenia mal')
+                    alert('Contraseña erronea')
+                    boleana=true
                 }
-            }else{
-                alert('usuario no encontrado')
             }
+        }
+        if(boleana==false){
+            alert('Usuario no encontrado')
         }
     }
   return (
       <div>
           <div>
-        <Form style={{'width':'50%','margin':'auto','border':'1px groove'}}>
+        <Form style={{'width':'50%','margin':'auto','border':'1px groove','textAlign':'center'}}>
             {
                 volver ? 
                 (
@@ -57,7 +61,7 @@ function IniciarSesion() {
                 )
                 :
                 (
-                    <>
+                    <div style={{'textAlign':'center'}}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Ingresa un usuario</Form.Label>
                         <br />
@@ -74,7 +78,7 @@ function IniciarSesion() {
                     <Button variant="primary" type="" onClick={comparar}>
                         Iniciar Sesión
                     </Button>
-                    </>
+                    </div>
                 )
             }
             

@@ -39,7 +39,7 @@ function MisPublicacionesCart({nombre,detalle,foto1,edad,categoria,id,individual
 
         const querydb = getFirestore()
         await deleteDoc(doc(querydb,'mascotas',indice))
-        .then(resp=>{window.location.reload()})
+        .then(resp=>{window.location.replace('');})
             
         
         

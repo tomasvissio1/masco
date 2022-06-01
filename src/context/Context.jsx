@@ -21,9 +21,7 @@ function ContextProvider ({children}){
     }
     useEffect(()=>{
         if (localStorage.getItem('usuario')==null) {
-            alert('no hay usuario')
         }else{
-            alert('si hay usuario')
             setUsuario(localStorage.getItem('usuario'))
         }
     },[])

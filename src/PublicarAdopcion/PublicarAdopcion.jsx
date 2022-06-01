@@ -3,9 +3,10 @@ import {Button, Card, Modal} from 'react-bootstrap'
 import {storage} from '../FireBase/Config'
 import {getDownloadURL, listAll, ref,uploadBytes} from 'firebase/storage'
 import {v4} from 'uuid'
-import { addDoc, collection, getFirestore } from 'firebase/firestore'
+import { addDoc, collection, getDocs, getFirestore } from 'firebase/firestore'
 import '../PublicarAdopcion/PublicarAdopcion.css'
 import { Context } from '../context/Context'
+import { Link } from 'react-router-dom'
 
 function PublicarAdopcion() {
     const [realizado,SetRealizado]=useState(false)
@@ -14,6 +15,17 @@ function PublicarAdopcion() {
     const [confirmarDatos,SetConfirmarDatos] = useState(false)
     const [nombreImagen,SetNombreImagen]= useState('')
     const {usuario} = useContext(Context)
+    const [usuarios, SetUsuarios] = useState([])
+
+    //busco todos los datos para despues ver que no se repita el usuario y nombre de mascota
+    useEffect(()=>{
+        const querydb = getFirestore()
+        const queryCollection = collection(querydb,'mascotas')
+        getDocs(queryCollection)
+        .then(resp=>{
+            SetUsuarios(resp.docs.map(item=>({id:item.id,...item.data()})))
+        })
+    },[])
     completarDatos()
         function completarDatos(){
             setTimeout(() => {
@@ -43,25 +55,32 @@ function PublicarAdopcion() {
         }
     //traigo datos de todo lo que se escribio y tambien de las fotos
     function traerDatos(){
-        let categoriaf=''
-        if (document.getElementById('radioGato').checked) {
-            categoriaf='gato'
-        }
-        if (document.getElementById('radioPerro').checked) {
-            categoriaf='perro'
-        }
-        let nombref = document.getElementById('nombre').value
-        let edadf = document.getElementById('edad').value
-        let localidadf = document.getElementById('localidad').value
-        let telefonof = document.getElementById('telefono').value
-        let detallesf = document.getElementById('detalles').value
-        let objeto={nombreImagen:nombreImagen,usuario:usuario,nombre:nombref,edad:edadf,localidad:localidadf,telefono:telefonof,detalle:detallesf,foto1:listaDeImagenes,categoria:categoriaf}
+        
+            let categoriaf=''
+            if (document.getElementById('radioGato').checked) {
+                categoriaf='gato'
+            }
+            if (document.getElementById('radioPerro').checked) {
+                categoriaf='perro'
+            }
+            let nombref = document.getElementById('nombre').value
+            let edadf = document.getElementById('edad').value
+            let localidadf = document.getElementById('localidad').value
+            let telefonof = document.getElementById('telefono').value
+            let detallesf = document.getElementById('detalles').value
+            let objeto={nombreImagen:nombreImagen,usuario:usuario,nombre:nombref,edad:edadf,localidad:localidadf,telefono:telefonof,detalle:detallesf,foto1:listaDeImagenes,categoria:categoriaf}
 
-        const db = getFirestore()
-        const queryCollection = collection(db,'mascotas')
-        addDoc(queryCollection, objeto)
+            const db = getFirestore()
+            const queryCollection = collection(db,'mascotas')
+            addDoc(queryCollection, objeto)
+            .then(resp=>{
+                alert('publicacion lista')
+            })
 
-        SetRealizado(true)
+            SetRealizado(true)
+            
+        
+        
     }
     //hago que el label active al input file
     /* setTimeout(() => {
@@ -79,19 +98,29 @@ function PublicarAdopcion() {
 
     // el onChange del input file, que fuarda la imagen en storage
     const funcionSubirImagen=(e)=>{
-        inhabilitar()
-        e.preventDefault()
-        if (subirImagen==null) return;
-        console.log(subirImagen.name)
-       /*  const imageRef = ref(storage, `images/${subirImagen.name + v4()}`) */
-       const imageRef = ref(storage, `${usuario}/${document.getElementById('nombre').value}/${subirImagen.name/*  + v4() */}`)
-       SetNombreImagen(subirImagen.name)
-        console.log(imageRef)
-        uploadBytes(imageRef, subirImagen)
-        .then(()=>{
-            alert("imagen cargada")
-            traerFotos()
-        })
+        let boleano=false
+        for (let i = 0; i < usuarios.length; i++) {
+            if (usuario ==usuarios[i].usuario && document.getElementById('nombre').value ==usuarios[i].nombre) {
+                boleano=true
+                alert('ya existe ese nombre de mascota con tu usuario, cambiar por otro')
+            }
+        }
+        if(boleano==false){
+            inhabilitar()
+            e.preventDefault()
+            if (subirImagen==null) return;
+            console.log(subirImagen.name)
+        /*  const imageRef = ref(storage, `images/${subirImagen.name + v4()}`) */
+            const imageRef = ref(storage, `${usuario}/${document.getElementById('nombre').value}/${subirImagen.name/*  + v4() */}`)
+            SetNombreImagen(subirImagen.name)
+                console.log(imageRef)
+                uploadBytes(imageRef, subirImagen)
+                .then(()=>{
+                    alert("imagen cargada")
+                    traerFotos()
+                })
+        }
+        
     }
 
     //traigo la url de las fotos y la coloco en el objeto donde guardo todos los datos
@@ -135,20 +164,15 @@ function PublicarAdopcion() {
     <div>
         {
             realizado ?(
-                <Modal.Dialog>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Realizado!</Modal.Title>
-                    </Modal.Header>
-
-                    <Modal.Body>
-                        <p>Aviso importante: Debes de estar atent@ a tu teléfono por si te llaman :D</p>
-                    </Modal.Body>
-
-                    <Modal.Footer>
-                        <Button variant="secondary">Close</Button>
-                        <Button variant="primary">Save changes</Button>
-                    </Modal.Footer>
-                </Modal.Dialog>
+                <div style={{'textAling':'center','margin':'auto','display':'flex','justifyContent':'center'}}>
+                    <Link to={'/'}>
+                        <Button variant="alert alert-primary" onClick={traerDatos}>Volver al menú</Button>
+                    </Link>
+                    <Link to={'/MisPublicaciones'}>
+                        <Button variant="alert alert-primary" onClick={traerDatos}>Ver Publicaciones</Button>
+                    </Link>
+                    
+                </div>
             ):
             
             (
@@ -160,7 +184,8 @@ function PublicarAdopcion() {
                                 <form action="" method='POST' encType='application/x-www-form-urlencoded'>
                                     <div className='formGroup'>
                                         <label htmlFor="nombre">Nombre de la mascota</label>
-                                        <br/>
+                                        <p style={{'color':'rgba(0,0,0,0.5)'}}>(No debe ser igual a uno ya publicado con tu cuenta)</p>
+                                        
                                         <input type="text" name="nombre" id="nombre" placeholder='Tomy...' onKeyUp={completarDatos}required/>
                                     </div>
                                     <div className='formGroup'>

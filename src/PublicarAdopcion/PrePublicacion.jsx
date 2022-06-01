@@ -15,7 +15,7 @@ function PrePublicacion() {
         else{
             SetRegistrado(true)
         }
-    },[])
+    },[usuario])
   return (
     <div>
         {
@@ -23,7 +23,7 @@ function PrePublicacion() {
             (<PublicarAdopcion/>)
             :
             (<div>
-                <div>
+                <div style={{'textAlign':'center'}}>
                     <h3>Debes iniciar sesión para poder publicar una adopción</h3>
                     <Link to={'/IniciarSesion'}>
                         <Button variant="primary" type="submit">
